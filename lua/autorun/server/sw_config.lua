@@ -1,73 +1,45 @@
---[[----------------------------------------------------------------------------
-    hyper-superwhitelist  ::  configuration
-
-    This is the only file you need to edit. Authorization is by SteamID only,
-    never by name, and nothing here is ever sent to clients.
-------------------------------------------------------------------------------]]
 if not SERVER then return end
 
 SW = SW or {}
 
---[[ Storage ---------------------------------------------------------------- ]]
-
--- "hardcoded" reads SW.Whitelist below. "mysql" reads a database (needs mysqloo).
+-- "hardcoded" (SW.Whitelist below) or "mysql" (needs the mysqloo module).
 SW.Storage = "hardcoded"
 
--- SteamID -> the usergroups that SteamID is allowed to hold.
--- Keys may be STEAM_0:X:XXXXXXX or a 64-bit SteamID; both work.
+-- SteamID -> allowed groups. STEAM_0:X:Y or 64-bit keys both work.
 SW.Whitelist = {
 	-- ["STEAM_0:1:11101"]   = { "superadmin" },
 	-- ["76561197960287930"] = { "superadmin", "owner" },
 }
 
---[[ Groups ----------------------------------------------------------------- ]]
-
--- Groups that require a whitelist entry. Holding one without an entry is a violation.
+-- Groups that require a whitelist entry to hold.
 SW.ProtectedGroups = { "superadmin", "owner" }
 
--- Where violators are put back to. Must NOT be one of SW.ProtectedGroups.
+-- Where violators are sent. Must not be a protected group.
 SW.DefaultGroup = "user"
-
---[[ Enforcement ------------------------------------------------------------ ]]
 
 -- "log" | "demote" | "kick" | "kick_demote" | "kick_ban"
 SW.EnforcementMode = "kick_demote"
 
--- Ban length in minutes for "kick_ban" (0 = permanent), and the kick/ban reason.
-SW.BanDuration = 0
+SW.BanDuration = 0                              -- minutes for kick_ban (0 = permanent)
 SW.BanReason   = "Unauthorized rank detected"
 
--- Seconds between full re-validation sweeps. 0 disables the sweep.
-SW.RecheckInterval = 60
+SW.RecheckInterval = 60                         -- seconds between sweeps (0 = off)
 
---[[ Safety ----------------------------------------------------------------- ]]
-
--- Keep false. When the whitelist resolves to zero entries, enforcement is
--- SUSPENDED so a typo or a database blip can't demote or ban your whole staff.
--- Set true only if an empty list is meant to punish every protected-group holder.
+-- Suspend enforcement when the whitelist is empty, so a typo can't mass-punish.
 SW.AllowEmptyWhitelist = false
 
--- Fallback detour of Player:SetUserGroup, for admin systems that change groups
--- without firing CAMI. Set false if it conflicts with another addon.
+-- Player:SetUserGroup for admin systems that skip CAMI. false to disable.
 SW.DetourSetUserGroup = true
 
---[[ Alerts ----------------------------------------------------------------- ]]
+SW.DiscordWebhook = ""                          -- webhook URL, empty = disabled
+SW.AlertCooldown  = 300                         -- seconds between repeat alerts per SteamID
 
--- Discord webhook for violation alerts. Empty = disabled.
-SW.DiscordWebhook = ""
+SW.WebhookRate       = 2                        -- seconds between Discord sends
+SW.WebhookQueueLimit = 50                       -- queued alerts before overflow is dropped
+SW.ReconnectDelay    = 5                        -- seconds between MySQL reconnect attempts
+SW.KeepAliveInterval = 30                       -- seconds between MySQL keepalive pings
 
--- Seconds to suppress repeat alerts for the same SteamID (anti-spam).
-SW.AlertCooldown = 300
-
---[[ (safe defaults - leave these unless you have a reason) ---------- ]]
-
-SW.WebhookRate       = 2   -- seconds between Discord sends
-SW.WebhookQueueLimit = 50  -- queued alerts before the overflow is dropped
-SW.ReconnectDelay    = 5   -- seconds between MySQL reconnect attempts
-SW.KeepAliveInterval = 30  -- seconds between MySQL keepalive pings
-
---[[ MySQL (only used when SW.Storage == "mysql") --------------------------- ]]
-
+-- Only used when SW.Storage == "mysql".
 SW.MySQL = {
 	host     = "",
 	username = "",
