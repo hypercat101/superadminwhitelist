@@ -3,9 +3,9 @@
 > Secure SteamID-based protection for privileged usergroups in Garry's Mod.
 
 <p align="center">
-    <img src="https://img.shields.io/github/last-commit/hypercat101/hyper-superwhitelist?style=for-the-badge">
-    <img src="https://img.shields.io/github/license/hypercat101/hyper-superwhitelist?style=for-the-badge">
-    <img src="https://img.shields.io/github/languages/top/hypercat101/hyper-superwhitelist?style=for-the-badge">
+    <img src="https://img.shields.io/github/last-commit/hypercat101/superadminwhitelist?style=for-the-badge">
+    <img src="https://img.shields.io/github/license/hypercat101/superadminwhitelist?style=for-the-badge">
+    <img src="https://img.shields.io/github/languages/top/hypercat101/superadminwhitelist?style=for-the-badge">
 </p>
 
 <p align="center">
@@ -228,7 +228,7 @@ The whitelist is loaded once into memory, so authorization checks never perform 
 
 Run:
 
-```
+```text
 sw_reload
 ```
 
