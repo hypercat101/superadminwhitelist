@@ -1,0 +1,10 @@
+{
+	"title": "hyper-superwhitelist",
+	"type": "servercontent",
+	"tags": ["build", "roleplay"],
+	"ignore": [
+		"*.md",
+		"*.git*",
+		".github/*"
+	]
+}
