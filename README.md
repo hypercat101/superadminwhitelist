@@ -9,7 +9,6 @@
 </p>
 
 <p align="center">
-    <img src="https://img.shields.io/badge/Garry's_Mod-Server--Side-blue?style=for-the-badge">
     <img src="https://img.shields.io/badge/CAMI-Compatible-success?style=for-the-badge">
     <img src="https://img.shields.io/badge/Lua-100%25-2C2D72?style=for-the-badge">
 </p>
